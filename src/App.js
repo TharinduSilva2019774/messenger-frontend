@@ -1,7 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useEffect, useState } from "react";
-import Sender from "./components/sender.tsx";
 
 function App() {
   const [newData, setNewData] = useState();
