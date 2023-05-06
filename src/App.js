@@ -30,13 +30,10 @@ function App() {
   };
   const bodyStyle = {
     color: "white",
-    backgroundColor: "#154c79",
+    backgroundColor: "#113d61",
     padding: "5px",
     fontFamily: "Arial",
     height: "100vh",
-  };
-  const textBox = {
-    width: "100px",
   };
   function textareaChange(event) {
     setMassage(event.target.value);
@@ -88,14 +85,29 @@ function App() {
               marginLeft: "-0px",
               outline: "none",
               resize: "none",
+              color: "#b1aca5",
+              backgroundColor: "#181a1b",
             }}
           />
-          <button onClick={sending}> Send </button>
+          <button
+            onClick={sending}
+            style={{
+              color: "#65625e",
+              backgroundColor: "#181a1b",
+            }}
+          >
+            {" "}
+            Send{" "}
+          </button>
         </div>
         <input
           type="text"
           onChange={userIdChange}
           placeholder="Plz put your ID"
+          style={{
+            color: "#b1aca5",
+            backgroundColor: "#181a1b",
+          }}
         />
       </body>
     </div>
