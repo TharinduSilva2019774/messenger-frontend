@@ -11,14 +11,15 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("http://localhost:8080/getAll", {
+      fetch("https://messenger-backend-production.up.railway.app/getAll", {
         method: "GET",
       })
         .then((res) => res.json())
         .then((data) => {
           setNewData(data);
         });
-    }, 1000);
+      console.log(process.env);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -52,9 +53,10 @@ function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: userId, message: message }),
       };
-      fetch("http://localhost:8080/send", requestOptions).then((response) =>
-        console.log(response)
-      );
+      fetch(
+        "https://messenger-backend-production.up.railway.app/send",
+        requestOptions
+      ).then((response) => console.log(response));
 
       setMassage("");
     }
