@@ -1,5 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
   const [newData, setNewData] = useState();
@@ -32,7 +33,10 @@ function App() {
     backgroundColor: "#154c79",
     padding: "5px",
     fontFamily: "Arial",
-    height: "90vh",
+    height: "100vh",
+  };
+  const textBox = {
+    width: "100px",
   };
   function textareaChange(event) {
     setMassage(event.target.value);
@@ -78,6 +82,13 @@ function App() {
             placeholder="Enter your message"
             value={message}
             onChange={textareaChange}
+            style={{
+              width: "40%",
+              margin: "30px",
+              marginLeft: "-0px",
+              outline: "none",
+              resize: "none",
+            }}
           />
           <button onClick={sending}> Send </button>
         </div>

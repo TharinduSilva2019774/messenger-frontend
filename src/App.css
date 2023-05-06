@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+::-webkit-scrollbar {
+  width: 25px;
+}
+
+::-webkit-scrollbar-track {
+  background: #dc3545;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: 1inear-gradient(red, yellow);
+  border-radius: 25px;
+}
+
+/* ::-webkit-scrollbar-thumb:hovert {
+  background-image: linear-gradient (Oree0970, Oeff6a00);
+} */
+
+.scrollable-div {
+  background-color: #0b263d;
+  height: 80vh;
+  overflow: auto;
+  margin: 10px;
+  text-align: justify;
+  padding: 10px;
+}
