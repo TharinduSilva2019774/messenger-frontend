@@ -4,23 +4,38 @@ import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
   const [newData, setNewData] = useState();
-
   const [message, setMassage] = useState();
   const [userId, setUserId] = useState();
 
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   useEffect(() => {
+    let count = 0;
     const interval = setInterval(() => {
       fetch("https://messenger-backend-production.up.railway.app/getAll", {
         method: "GET",
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data.length);
+          console.log(count);
+          if (data.length !== count) {
+            autoscroll();
+          }
+          count = data.length;
           setNewData(data);
+          console.log(data);
         });
-      console.log(process.env);
     }, 2000);
     return () => clearInterval(interval);
   }, []);
+
+  const autoscroll = async (event) => {
+    await delay(100);
+
+    var elem = document.getElementById("autoscrollable-div");
+    elem.scrollTop = elem.scrollHeight;
+  };
 
   const topicStyle = {
     color: "white",
@@ -43,9 +58,13 @@ function App() {
     setUserId(event.target.value);
   }
 
+  function handleEnterKeyDown(event) {
+    if (event.key === "Enter") {
+      sending();
+    }
+  }
+
   function sending() {
-    console.log(message);
-    console.log(userId);
     if (message != "") {
       const requestOptions = {
         method: "POST",
@@ -67,10 +86,11 @@ function App() {
         Silent Eye Nexus (SEN)
       </header>
       <body style={bodyStyle}>
-        <div className="scrollable-div">
+        <div className="scrollable-div" id="autoscrollable-div">
           {newData?.map((message) => (
             <div>
-              {message.user.name} :: {message.messageBody}{" "}
+              {new Date(message.time).toLocaleString()} :: {message.user.name}{" "}
+              :: {message.messageBody}{" "}
             </div>
           ))}
         </div>
@@ -88,6 +108,7 @@ function App() {
               color: "#b1aca5",
               backgroundColor: "#181a1b",
             }}
+            onKeyDown={handleEnterKeyDown}
           />
           <button
             onClick={sending}
