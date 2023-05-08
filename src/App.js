@@ -1,11 +1,14 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import useSound from "use-sound";
+import boopSfx from "./media/sounds/Oii.mp3";
 
 function App() {
   const [newData, setNewData] = useState();
   const [message, setMassage] = useState();
   const [userId, setUserId] = useState();
+  const [play] = useSound(require("./media/sounds/Oii.mp3"));
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -35,6 +38,7 @@ function App() {
 
     var elem = document.getElementById("autoscrollable-div");
     elem.scrollTop = elem.scrollHeight;
+    play();
   };
 
   const topicStyle = {
@@ -65,7 +69,7 @@ function App() {
   }
 
   function sending() {
-    if (message != "") {
+    if (message !== "") {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
