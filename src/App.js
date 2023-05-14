@@ -2,7 +2,6 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import useSound from "use-sound";
-import boopSfx from "./media/sounds/Oii.mp3";
 
 function App() {
   const [newData, setNewData] = useState();
@@ -20,14 +19,12 @@ function App() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.length);
-          console.log(count);
           if (data.length !== count) {
             autoscroll();
           }
           count = data.length;
           setNewData(data);
-          console.log(data);
+          // console.log(data);
         });
     }, 2000);
     return () => clearInterval(interval);
@@ -38,7 +35,9 @@ function App() {
 
     var elem = document.getElementById("autoscrollable-div");
     elem.scrollTop = elem.scrollHeight;
+    console.log("Playing sound");
     play();
+    console.log("Done Playing sound");
   };
 
   const topicStyle = {
@@ -69,11 +68,12 @@ function App() {
   }
 
   function sending() {
-    if (message !== "") {
+    const someText = message.replace(/(\r\n|\n|\r)/gm, "");
+    if (someText) {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: userId, message: message }),
+        body: JSON.stringify({ userId: userId, message: someText }),
       };
       fetch(
         "https://messenger-backend-production.up.railway.app/send",
