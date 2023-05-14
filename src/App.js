@@ -92,7 +92,7 @@ function App() {
       <body style={bodyStyle}>
         <div className="scrollable-div" id="autoscrollable-div">
           {newData?.map((message) => (
-            <div>
+            <div style={{ color: message.user.color }}>
               {new Date(message.time).toLocaleString()} :: {message.user.name}{" "}
               :: {message.messageBody}{" "}
             </div>
