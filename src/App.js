@@ -22,24 +22,21 @@ function App() {
   };
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  // useEffect(() => {
-  //   let count = 0;
-  //   const interval = setInterval(() => {
-  //     fetch("https://messenger-backend-production.up.railway.app/getAll", {
-  //       method: "GET",
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         if (data.length !== count) {
-  //           autoscroll();
-  //         }
-  //         count = data.length;
-  //         setNewData(data);
-  //         // console.log(data);
-  //       });
-  //   }, 2000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    let count = 0;
+    fetch("https://messenger-backend-production.up.railway.app/getAll", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.length !== count) {
+          autoscroll();
+        }
+        count = data.length;
+        setNewData(data);
+        // console.log(data);
+      });
+  }, []);
 
   const autoscroll = async (event) => {
     await delay(100);
