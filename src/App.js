@@ -9,7 +9,8 @@ function App() {
   const [message, setMassage] = useState();
   const [userId, setUserId] = useState();
   const [play] = useSound(require("./media/sounds/Oii.mp3"));
-  const SOCKET_URL = "http://localhost:8080/ws-message";
+  const SOCKET_URL =
+    "https://messenger-backend-production.up.railway.app/ws-message";
   const backendUrl = "https://messenger-backend-production.up.railway.app/";
   // const backendUrl = "http://localhost:8080/";
   let onConnected = () => {
