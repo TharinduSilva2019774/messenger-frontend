@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "express": "^4.17.3",
+    "react-stomp": "^5.1.0",
+    "sockjs": "^0.3.24",
     "use-sound": "^4.0.1"
   },
   "devDependencies": {
