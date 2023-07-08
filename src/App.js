@@ -9,9 +9,8 @@ function App() {
   const [message, setMassage] = useState();
   const [userId, setUserId] = useState();
   const [play] = useSound(require("./media/sounds/Oii.mp3"));
-  const SOCKET_URL =
-    "https://messenger-backend-production.up.railway.app/ws-message";
-  const backendUrl = "https://messenger-backend-production.up.railway.app/";
+  const SOCKET_URL = "https://sen-backend.onrender.com/ws-message";
+  const backendUrl = "https://sen-backend.onrender.com/";
   // const backendUrl = "http://localhost:8080/";
   let onConnected = () => {
     console.log("Connected!!");
@@ -23,7 +22,7 @@ function App() {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
-    fetch("https://messenger-backend-production.up.railway.app/getAll", {
+    fetch("https://sen-backend.onrender.com/getAll", {
       method: "GET",
     })
       .then((res) => res.json())
@@ -38,7 +37,7 @@ function App() {
 
     let count = 0;
     const interval = setInterval(() => {
-      fetch("https://messenger-backend-production.up.railway.app/getAll", {
+      fetch("https://sen-backend.onrender.com/getAll", {
         method: "GET",
       })
         .then((res) => res.json())
