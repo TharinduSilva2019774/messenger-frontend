@@ -3,15 +3,27 @@ import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import useSound from "use-sound";
 import SockJsClient from "react-stomp";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 function App() {
   const [newData, setNewData] = useState();
   const [message, setMassage] = useState();
   const [userId, setUserId] = useState();
+  const [googleToken, setGoogleToken] = useState();
+  const [userProfile, setUserProfile] = useState();
   const [play] = useSound(require("./media/sounds/Oii.mp3"));
   const SOCKET_URL = "https://sen-backend.onrender.com/ws-message";
   const backendUrl = "https://sen-backend.onrender.com/";
+
+  // const SOCKET_URL = "http://localhost:8080/ws-message";
   // const backendUrl = "http://localhost:8080/";
+
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => setGoogleToken(codeResponse),
+    onError: (error) => console.log("Login Failed:", error),
+  });
+
   let onConnected = () => {
     console.log("Connected!!");
   };
@@ -22,7 +34,7 @@ function App() {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
-    fetch("https://sen-backend.onrender.com/getAll", {
+    fetch(backendUrl + "getAll", {
       method: "GET",
     })
       .then((res) => res.json())
@@ -37,7 +49,7 @@ function App() {
 
     let count = 0;
     const interval = setInterval(() => {
-      fetch("https://sen-backend.onrender.com/getAll", {
+      fetch(backendUrl + "getAll", {
         method: "GET",
       })
         .then((res) => res.json())
@@ -52,6 +64,27 @@ function App() {
     }, 500000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (googleToken) {
+      console.log(googleToken);
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleToken.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${googleToken.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          setUserProfile(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [googleToken]);
 
   const autoscroll = async (event) => {
     await delay(100);
@@ -74,7 +107,7 @@ function App() {
     backgroundColor: "#113d61",
     padding: "5px",
     fontFamily: "Arial",
-    height: "100vh",
+    height: "110vh",
   };
   function textareaChange(event) {
     setMassage(event.target.value);
@@ -96,7 +129,7 @@ function App() {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: userId, message: someText }),
+        body: JSON.stringify({ email: userProfile.email, message: someText }),
       };
       fetch(backendUrl + "send", requestOptions).then((response) =>
         console.log(response)
@@ -139,6 +172,9 @@ function App() {
           ))}
         </div>
         <div>
+          {userProfile ? "Name : " + userProfile.name : "No user logged in"}
+        </div>
+        <div>
           <textarea
             placeholder="Enter your message"
             value={message}
@@ -165,15 +201,15 @@ function App() {
             Send{" "}
           </button>
         </div>
-        <input
-          type="text"
-          onChange={userIdChange}
-          placeholder="Plz put your ID"
+        <button
+          onClick={() => login()}
           style={{
             color: "#b1aca5",
             backgroundColor: "#181a1b",
           }}
-        />
+        >
+          Sign in with Google 🚀{" "}
+        </button>
       </body>
     </div>
   );
