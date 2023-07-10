@@ -13,11 +13,11 @@ function App() {
   const [googleToken, setGoogleToken] = useState();
   const [userProfile, setUserProfile] = useState();
   const [play] = useSound(require("./media/sounds/Oii.mp3"));
-  // const SOCKET_URL = "https://sen-backend.onrender.com/ws-message";
-  // const backendUrl = "https://sen-backend.onrender.com/";
+  const SOCKET_URL = "https://sen-backend.onrender.com/ws-message";
+  const backendUrl = "https://sen-backend.onrender.com/";
 
-  const SOCKET_URL = "http://localhost:8080/ws-message";
-  const backendUrl = "http://localhost:8080/";
+  // const SOCKET_URL = "http://localhost:8080/ws-message";
+  // const backendUrl = "http://localhost:8080/";
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setGoogleToken(codeResponse),
