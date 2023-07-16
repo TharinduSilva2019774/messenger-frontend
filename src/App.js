@@ -107,6 +107,19 @@ function App() {
     justifyContent: "space-between",
   };
 
+  const imageContainerStyles = {
+    paddingRight: "0.5%",
+    width: "10%",
+    display: "flex",
+    justifyContent: "end",
+  };
+
+  const imageStyles = {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+  };
+
   const bodyStyle = {
     color: "white",
     backgroundColor: "#113d61",
@@ -167,23 +180,9 @@ function App() {
       <header style={{ backgroundColor: "DodgerBlue" }}>
         <div style={topRow}>
           <div style={topicStyle}>Silent Eye Nexus (SEN)</div>
-          <div
-            style={{
-              paddingRight: "0.5%",
-              width: "10%",
-              display: "flex",
-              justifyContent: "end",
-            }}
-          >
+          <div style={imageContainerStyles}>
             {userProfile && (
-              <img
-                src={userProfile.picture}
-                style={{
-                  width: 30,
-                  height: 30,
-                  borderRadius: 30 / 2,
-                }}
-              />
+              <img src={userProfile.picture} style={imageStyles} />
             )}
             <dev style={{ paddingLeft: "5%" }}>
               {userProfile ? userProfile.given_name : "No user logged in"}
