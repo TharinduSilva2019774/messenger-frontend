@@ -98,10 +98,15 @@ function App() {
 
   const topicStyle = {
     color: "white",
-    backgroundColor: "DodgerBlue",
-    padding: "10hv",
+    paddingRight: "12%",
     fontFamily: "Arial",
   };
+
+  const topRow = {
+    display: "flex",
+    justifyContent: "space-between",
+  };
+
   const bodyStyle = {
     color: "white",
     backgroundColor: "#113d61",
@@ -159,8 +164,32 @@ function App() {
         onMessage={(msg) => onMessageReceived(msg)}
         debug={false}
       />
-      <header style={topicStyle} className>
-        Silent Eye Nexus (SEN)
+      <header style={{ backgroundColor: "DodgerBlue" }}>
+        <div style={topRow}>
+          <div style={topicStyle}>Silent Eye Nexus (SEN)</div>
+          <div
+            style={{
+              paddingRight: "0.5%",
+              width: "10%",
+              display: "flex",
+              justifyContent: "end",
+            }}
+          >
+            {userProfile && (
+              <img
+                src={userProfile.picture}
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 30 / 2,
+                }}
+              />
+            )}
+            <dev style={{ paddingLeft: "5%" }}>
+              {userProfile ? userProfile.given_name : "No user logged in"}
+            </dev>
+          </div>
+        </div>
       </header>
       <body style={bodyStyle}>
         <div className="scrollable-div" id="autoscrollable-div">
@@ -170,9 +199,6 @@ function App() {
               :: {message.messageBody}{" "}
             </div>
           ))}
-        </div>
-        <div>
-          {userProfile ? "Name : " + userProfile.name : "No user logged in"}
         </div>
         <div>
           <textarea
