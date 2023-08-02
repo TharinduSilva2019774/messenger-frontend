@@ -5,7 +5,7 @@ import useSound from "use-sound";
 import SockJsClient from "react-stomp";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import { useSpring, animated } from "react-spring";
+// import { useSpring, animated } from "react-spring";
 
 function App() {
   const [newData, setNewData] = useState();
@@ -16,19 +16,17 @@ function App() {
   const [play] = useSound(require("./media/sounds/Oii.mp3"));
   const [typingUser, setTypingUser] = useState();
 
-  // const SOCKET_URL = "https://sen-backend.onrender.com/ws-message";
-  // const backendUrl = "https://sen-backend.onrender.com/";
+  const backendUrl = "https://sen-backend.onrender.com/";
+  // const backendUrl = "http://localhost:8080/";
 
-  const backendUrl = "http://localhost:8080/";
-
-  const props = useSpring({
-    to: { opacity: 1 },
-    from: { opacity: 0 },
-    reset: true,
-    reverse: flip,
-    delay: 200,
-    onRest: () => setFlip(!flip),
-  });
+  // const props = useSpring({
+  //   to: { opacity: 1 },
+  //   from: { opacity: 0 },
+  //   reset: true,
+  //   reverse: flip,
+  //   delay: 200,
+  //   onRest: () => setFlip(!flip),
+  // });
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setGoogleToken(codeResponse),
@@ -224,7 +222,7 @@ function App() {
             </div>
           ))}
         </div>
-        <div>
+        {/* <div>
           {typingUser ? (
             <div style={{ marginLeft: "10px" }}>
               {" "}
@@ -235,7 +233,7 @@ function App() {
           ) : (
             <div style={{ height: "25px" }}></div>
           )}
-        </div>
+        </div> */}
 
         <div>
           <textarea
