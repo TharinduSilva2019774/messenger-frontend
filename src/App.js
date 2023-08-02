@@ -3,14 +3,13 @@ import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import useSound from "use-sound";
 import SockJsClient from "react-stomp";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useSpring, animated } from "react-spring";
 
 function App() {
   const [newData, setNewData] = useState();
   const [message, setMassage] = useState();
-  const [userId, setUserId] = useState();
   const [googleToken, setGoogleToken] = useState();
   const [userProfile, setUserProfile] = useState();
   const [flip, setFlip] = useState(false);
@@ -153,10 +152,6 @@ function App() {
     );
   }
 
-  function userIdChange(event) {
-    setUserId(event.target.value);
-  }
-
   function handleEnterKeyDown(event) {
     if (event.key === "Enter") {
       sending();
@@ -182,7 +177,7 @@ function App() {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: userId, message: someText }),
+      body: JSON.stringify({ userId: 1, message: someText }),
     };
     fetch(backendUrl + "websocket/send", requestOptions).then((response) =>
       console.log(response)
