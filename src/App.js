@@ -13,11 +13,13 @@ function App() {
   const [userId, setUserId] = useState();
   const [googleToken, setGoogleToken] = useState();
   const [userProfile, setUserProfile] = useState();
+  const [flip, setFlip] = useState(false);
   const [play] = useSound(require("./media/sounds/Oii.mp3"));
+  const [typingUser, setTypingUser] = useState();
+
   // const SOCKET_URL = "https://sen-backend.onrender.com/ws-message";
   // const backendUrl = "https://sen-backend.onrender.com/";
 
-  const SOCKET_URL = "http://localhost:8080/ws-message";
   const backendUrl = "http://localhost:8080/";
 
   const props = useSpring({
@@ -34,12 +36,16 @@ function App() {
     onError: (error) => console.log("Login Failed:", error),
   });
 
-  let onConnected = () => {
-    console.log("Connected!!");
-  };
   let onMessageReceived = (msg) => {
     setNewData(msg);
     autoscroll();
+  };
+
+  const typingDataReceived = async (typingUserv) => {
+    setTypingUser(typingUserv);
+    console.log(typingUserv);
+    await delay(5000);
+    setTypingUser("");
   };
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -54,7 +60,6 @@ function App() {
         }
         count = data.length;
         setNewData(data);
-        // console.log(data);
       });
 
     let count = 0;
@@ -69,7 +74,6 @@ function App() {
           }
           count = data.length;
           setNewData(data);
-          // console.log(data);
         });
     }, 500000);
     return () => clearInterval(interval);
@@ -139,6 +143,14 @@ function App() {
   };
   function textareaChange(event) {
     setMassage(event.target.value);
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: userProfile.email,
+    };
+    fetch(backendUrl + "websocket/typing", requestOptions).then((response) =>
+      console.log(response)
+    );
   }
 
   function userIdChange(event) {
@@ -180,11 +192,19 @@ function App() {
   return (
     <div>
       <SockJsClient
-        url={SOCKET_URL}
+        url={backendUrl + "ws-message"}
         topics={["/topic/message"]}
-        onConnect={onConnected}
-        onDisconnect={console.log("Disconnected!")}
+        onConnect={console.log("message ws connected!!")}
+        onDisconnect={console.log("message ws disconnected!")}
         onMessage={(msg) => onMessageReceived(msg)}
+        debug={false}
+      />
+      <SockJsClient
+        url={backendUrl + "ws-typing"}
+        topics={["/topic/typing"]}
+        onConnect={console.log("typing ws connected!!")}
+        onDisconnect={console.log("typing ws disconnected!")}
+        onMessage={(typingUser) => typingDataReceived(typingUser)}
         debug={false}
       />
       <header style={{ backgroundColor: "DodgerBlue" }}>
@@ -209,7 +229,19 @@ function App() {
             </div>
           ))}
         </div>
-        <animated.div style={props}>Asimov is typing ...</animated.div>
+        <div>
+          {typingUser ? (
+            <div style={{ marginLeft: "10px" }}>
+              {" "}
+              <animated.div style={props}>
+                {typingUser.name} is typing ...
+              </animated.div>
+            </div>
+          ) : (
+            <div style={{ height: "25px" }}></div>
+          )}
+        </div>
+
         <div>
           <textarea
             placeholder="Enter your message"
