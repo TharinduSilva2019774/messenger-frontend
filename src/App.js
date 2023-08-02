@@ -5,6 +5,7 @@ import useSound from "use-sound";
 import SockJsClient from "react-stomp";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { useSpring, animated } from "react-spring";
 
 function App() {
   const [newData, setNewData] = useState();
@@ -13,11 +14,20 @@ function App() {
   const [googleToken, setGoogleToken] = useState();
   const [userProfile, setUserProfile] = useState();
   const [play] = useSound(require("./media/sounds/Oii.mp3"));
-  const SOCKET_URL = "https://sen-backend.onrender.com/ws-message";
-  const backendUrl = "https://sen-backend.onrender.com/";
+  // const SOCKET_URL = "https://sen-backend.onrender.com/ws-message";
+  // const backendUrl = "https://sen-backend.onrender.com/";
 
-  // const SOCKET_URL = "http://localhost:8080/ws-message";
-  // const backendUrl = "http://localhost:8080/";
+  const SOCKET_URL = "http://localhost:8080/ws-message";
+  const backendUrl = "http://localhost:8080/";
+
+  const props = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    reset: true,
+    reverse: flip,
+    delay: 200,
+    onRest: () => setFlip(!flip),
+  });
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setGoogleToken(codeResponse),
@@ -199,6 +209,7 @@ function App() {
             </div>
           ))}
         </div>
+        <animated.div style={props}>Asimov is typing ...</animated.div>
         <div>
           <textarea
             placeholder="Enter your message"
