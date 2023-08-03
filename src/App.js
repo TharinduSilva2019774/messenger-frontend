@@ -222,18 +222,16 @@ function App() {
             </div>
           ))}
         </div>
-        {/* <div>
+        <div>
           {typingUser ? (
             <div style={{ marginLeft: "10px" }}>
               {" "}
-              <animated.div style={props}>
-                {typingUser.name} is typing ...
-              </animated.div>
+              <div>{typingUser.name} is typing ...</div>
             </div>
           ) : (
             <div style={{ height: "25px" }}></div>
           )}
-        </div> */}
+        </div>
 
         <div>
           <textarea
