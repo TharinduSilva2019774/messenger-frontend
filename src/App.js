@@ -1,4 +1,6 @@
 import "./App.css";
+import Fader from "./components/Fader";
+
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import useSound from "use-sound";
@@ -140,14 +142,16 @@ function App() {
   };
   function textareaChange(event) {
     setMassage(event.target.value);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: userProfile.email,
-    };
-    fetch(backendUrl + "websocket/typing", requestOptions).then((response) =>
-      console.log(response)
-    );
+    if (userProfile) {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: userProfile.email,
+      };
+      fetch(backendUrl + "websocket/typing", requestOptions).then((response) =>
+        console.log(response)
+      );
+    }
   }
 
   function handleEnterKeyDown(event) {
@@ -226,7 +230,7 @@ function App() {
           {typingUser ? (
             <div style={{ marginLeft: "10px" }}>
               {" "}
-              <div>{typingUser.name} is typing ...</div>
+              <Fader>{typingUser.name} is typing ...</Fader>
             </div>
           ) : (
             <div style={{ height: "25px" }}></div>
