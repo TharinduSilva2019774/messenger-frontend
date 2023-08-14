@@ -1,6 +1,6 @@
 import "./App.css";
 import Fader from "./components/Fader";
-
+import debounce from "lodash/debounce";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import useSound from "use-sound";
@@ -10,6 +10,38 @@ import axios from "axios";
 // import { useSpring, animated } from "react-spring";
 
 function App() {
+  const topicStyle = {
+    color: "white",
+    paddingRight: "12%",
+    fontFamily: "Arial",
+  };
+
+  const topRow = {
+    display: "flex",
+    justifyContent: "space-between",
+  };
+
+  const imageContainerStyles = {
+    paddingRight: "0.5%",
+    width: "10%",
+    display: "flex",
+    justifyContent: "end",
+  };
+
+  const imageStyles = {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+  };
+
+  const bodyStyle = {
+    color: "white",
+    backgroundColor: "#113d61",
+    padding: "5px",
+    fontFamily: "Arial",
+    height: "110vh",
+  };
+
   const [newData, setNewData] = useState();
   const [message, setMassage] = useState();
   const [googleToken, setGoogleToken] = useState();
@@ -17,18 +49,10 @@ function App() {
   const [flip, setFlip] = useState(false);
   const [play] = useSound(require("./media/sounds/Oii.mp3"));
   const [typingUser, setTypingUser] = useState();
+  const [counter, setCounter] = useState(0);
 
   const backendUrl = "https://sen-backend.onrender.com/";
   // const backendUrl = "http://localhost:8080/";
-
-  // const props = useSpring({
-  //   to: { opacity: 1 },
-  //   from: { opacity: 0 },
-  //   reset: true,
-  //   reverse: flip,
-  //   delay: 200,
-  //   onRest: () => setFlip(!flip),
-  // });
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setGoogleToken(codeResponse),
@@ -40,12 +64,12 @@ function App() {
     autoscroll();
   };
 
-  const typingDataReceived = async (typingUserv) => {
+  const typingDataReceived = (typingUserv) => {
     setTypingUser(typingUserv);
     console.log(typingUserv);
-    await delay(5000);
-    setTypingUser("");
+    setCounter(5);
   };
+
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
@@ -99,6 +123,19 @@ function App() {
     }
   }, [googleToken]);
 
+  useEffect(() => {
+    if (counter > 0) {
+      const interval = setInterval(incrementCounter, 1000);
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [counter]);
+
+  const incrementCounter = () => {
+    setCounter(counter - 1);
+  };
+
   const autoscroll = async (event) => {
     await delay(100);
 
@@ -109,37 +146,6 @@ function App() {
     console.log("Done Playing sound");
   };
 
-  const topicStyle = {
-    color: "white",
-    paddingRight: "12%",
-    fontFamily: "Arial",
-  };
-
-  const topRow = {
-    display: "flex",
-    justifyContent: "space-between",
-  };
-
-  const imageContainerStyles = {
-    paddingRight: "0.5%",
-    width: "10%",
-    display: "flex",
-    justifyContent: "end",
-  };
-
-  const imageStyles = {
-    width: 30,
-    height: 30,
-    borderRadius: 30 / 2,
-  };
-
-  const bodyStyle = {
-    color: "white",
-    backgroundColor: "#113d61",
-    padding: "5px",
-    fontFamily: "Arial",
-    height: "110vh",
-  };
   function textareaChange(event) {
     setMassage(event.target.value);
     if (userProfile) {
@@ -227,7 +233,7 @@ function App() {
           ))}
         </div>
         <div>
-          {typingUser ? (
+          {typingUser && counter != 0 ? (
             <div style={{ marginLeft: "10px" }}>
               {" "}
               <Fader>{typingUser.name} is typing ...</Fader>
