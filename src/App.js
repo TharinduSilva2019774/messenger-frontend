@@ -1,6 +1,5 @@
 import "./App.css";
 import Fader from "./components/Fader";
-import debounce from "lodash/debounce";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import useSound from "use-sound";
