@@ -1,0 +1,127 @@
+.home{
+    background-color: rgb(54, 84, 74);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.containr{
+    border: 1px solid white; 
+    border-radius: 10px;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    
+
+    .sidebarContainer{
+        height: 100%;
+        border-radius: 10px;
+        width: 30%;
+        background-color: rgb(149, 149, 178);
+    }
+    
+    .chatContainer{
+        height: 100%;
+        border-radius: 10px;
+        width: 70%;
+        background-color: rgb(99, 136, 99);
+
+        .chatTop{
+            width: 100%;
+            height: 10%;
+            background-color: aliceblue;
+            display: flex;
+            align-items: center;
+            padding-left: 5%;
+        }
+
+        .messageBox{
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .messageText{
+            border: 1px solid white; 
+            border-radius: 10px 0px 10px 10px;
+            padding: 5px;
+        }
+    }
+}
+
+.secMessanger{
+
+    width: 90%;
+    margin-left: 5%;
+    background-color: rgb(149, 149, 178);
+    border-bottom: 1px solid white; 
+    height: 10%;
+        display: flex;
+        align-items: center;
+
+    .userChatInfor{
+        padding-left: 6%;
+
+    }
+
+    .userChatImage{
+        padding-left: 6%;
+        img{
+            
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            
+        }
+    }
+
+
+}
+
+
+
+.sideBarTop{
+    width: 100%;
+    background-color: rgb(51, 51, 108);
+    border: 1px solid white; 
+    height: 10%;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+
+    .userChatInfor{
+        width: 50%;
+            display: flex;
+    align-items: center;
+    }
+
+    .userChatImage{
+        width: 50%;
+        padding-left: 6%;
+        img{
+            
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            
+        }
+    }
+
+    .userInfor{
+        display: flex;
+        align-items: center;
+    }
+
+    .logoutButton{
+        border: 1px solid white; 
+        border-radius: 15px;
+        margin-left: 5px;
+    }
+
+}
+

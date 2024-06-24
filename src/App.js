@@ -6,40 +6,42 @@ import useSound from "use-sound";
 import SockJsClient from "react-stomp";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import Home from "./pages/Home";
+import "./styles.scss";
 // import { useSpring, animated } from "react-spring";
 
 function App() {
-  const topicStyle = {
-    color: "white",
-    paddingRight: "12%",
-    fontFamily: "Arial",
-  };
+  // const topicStyle = {
+  //   color: "white",
+  //   paddingRight: "12%",
+  //   fontFamily: "Arial",
+  // };
 
-  const topRow = {
-    display: "flex",
-    justifyContent: "space-between",
-  };
+  // const topRow = {
+  //   display: "flex",
+  //   justifyContent: "space-between",
+  // };
 
-  const imageContainerStyles = {
-    paddingRight: "0.5%",
-    width: "10%",
-    display: "flex",
-    justifyContent: "end",
-  };
+  // const imageContainerStyles = {
+  //   paddingRight: "0.5%",
+  //   width: "10%",
+  //   display: "flex",
+  //   justifyContent: "end",
+  // };
 
-  const imageStyles = {
-    width: 30,
-    height: 30,
-    borderRadius: 30 / 2,
-  };
+  // const imageStyles = {
+  //   width: 30,
+  //   height: 30,
+  //   borderRadius: 30 / 2,
+  // };
 
-  const bodyStyle = {
-    color: "white",
-    backgroundColor: "#113d61",
-    padding: "5px",
-    fontFamily: "Arial",
-    height: "110vh",
-  };
+  // const bodyStyle = {
+  //   color: "white",
+  //   backgroundColor: "#113d61",
+  //   padding: "5px",
+  //   fontFamily: "Arial",
+  //   height: "110vh",
+  // };
 
   const [newData, setNewData] = useState();
   const [message, setMassage] = useState();
@@ -193,7 +195,8 @@ function App() {
 
   return (
     <div>
-      <SockJsClient
+      <Home />
+      {/* <SockJsClient
         url={backendUrl + "ws-message"}
         topics={["/topic/message"]}
         onConnect={console.log("message ws connected!!")}
@@ -225,9 +228,22 @@ function App() {
       <body style={bodyStyle}>
         <div className="scrollable-div" id="autoscrollable-div">
           {newData?.map((message) => (
-            <div style={{ color: message.user.color }}>
-              {new Date(message.time).toLocaleString()} :: {message.user.name}{" "}
-              :: {message.messageBody}{" "}
+            <div style={{ margin: 10 }}>
+              <div style={{ textAlign: "left" }}>
+                <div style={{ display: "inline", color: message.user.color }}>
+                  {message.user.name}
+                </div>
+                <div
+                  style={{
+                    display: "inline",
+                    marginLeft: "10px",
+                    color: "#8d949c",
+                  }}
+                >
+                  {new Date(message.time).toDateString()}
+                </div>
+              </div>
+              <div style={{ color: "#c7c9cd" }}>{message.messageBody}</div>
             </div>
           ))}
         </div>
@@ -278,7 +294,7 @@ function App() {
         >
           Sign in with Google 🚀{" "}
         </button>
-      </body>
+      </body> */}
     </div>
   );
 }

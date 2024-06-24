@@ -1,3 +1,4 @@
+/* 
 .App {
   text-align: center;
 }
@@ -50,10 +51,10 @@
   border-radius: 25px;
 }
 
-/* ::-webkit-scrollbar-thumb:hovert {
+ /* ::-webkit-scrollbar-thumb:hovert {
   background-image: linear-gradient (Oree0970, Oeff6a00);
-} */
-
+}  */
+/*
 .scrollable-div {
   background-color: #0b263d;
   height: 80vh;
@@ -70,3 +71,4 @@
   opacity: 0;
   transition: opacity 1s ease;
 }
+*/
